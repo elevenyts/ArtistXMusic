@@ -67,7 +67,7 @@ ArtistMusic/
 | `bot.py` | `Bot` — the main Pyrogram bot client; holds owner, sudoers, blacklist filters |
 | `userbot.py` | `Userbot` — up to 3 assistant accounts (`STRING_SESSION`, `2`, `3`) that join voice chats |
 | `calls.py` | `TgCall` — voice/video streaming with py-tgcalls: play, pause, resume, seek, next, stop |
-| `youtube.py` | `YouTube` — search, playlists, ArtistBots API download/stream, cookies fallback, logger-group song cache |
+| `youtube.py` | `YouTube` — search, playlists, ArtistBots API `/download`, cookies fallback, logger-group song cache |
 | `mongo.py` | `MongoDB` — all database access plus in-memory caches (admins, auth, chats, language, cache) |
 | `preload.py` | Background preloading of upcoming tracks |
 | `autoplay.py` | Picks a related track when the queue ends (`/autoplay`) |

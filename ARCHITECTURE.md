@@ -125,7 +125,7 @@ sequenceDiagram
     P->>Q: add(track)
     alt queue was empty
         P->>Y: get_play_source(track)
-        Y-->>P: local file or stream URL
+        Y-->>P: local file (fully downloaded)
         P->>T: play_media(chat, source)
         T->>V: assistant joins & streams
     else already playing
@@ -140,10 +140,9 @@ sequenceDiagram
 
 1. **Local cache** — file already in `downloads/`.
 2. **Logger-group cache** — `song_cache` collection points to a file the bot uploaded earlier; it is fetched from Telegram instead of re-downloading.
-3. **ArtistBots API `/stream`** (when `STREAM_FIRST=True`) — returns a playable URL, so the voice chat starts **immediately** while the file is saved in the background.
-4. **ArtistBots API download** — full download, then play.
-5. **yt-dlp + cookies fallback** (when `ENABLE_COOKIES_FALLBACK=True` and `COOKIE_URL` is set).
-6. Live streams skip the cache and go straight to the live path.
+3. **ArtistBots API `/download`** — full download first, then play.
+4. **yt-dlp + cookies fallback** (when `ENABLE_COOKIES_FALLBACK=True` and `COOKIE_URL` is set).
+5. Live streams skip the cache and go straight to the live path.
 
 After a fresh download the file is uploaded to the logger group in the background so the next request is a cache hit.
 
@@ -194,7 +193,7 @@ All settings live in `config.py` and are read from environment variables (via `p
 | Telegram | `API_ID`, `API_HASH`, `BOT_TOKEN`, `OWNER_ID`, `LOGGER_ID`, `STRING_SESSION`, `STRING_SESSION2`, `STRING_SESSION3` |
 | Database | `MONGO_DB_URI` |
 | Limits | `DURATION_LIMIT` (minutes), `QUEUE_LIMIT`, `PLAYLIST_LIMIT` |
-| API & download | `ARTISTBOTS_API_URL`, `ARTISTBOTS_KEY`, `ENABLE_API`, `ENABLE_COOKIES_FALLBACK`, `COOKIE_URL`, `API_TIMEOUT`, `API_STREAM_TIMEOUT`, `STREAM_FIRST` |
+| API & download | `ARTISTBOTS_API_URL`, `ARTISTBOTS_KEY`, `ENABLE_API`, `ENABLE_COOKIES_FALLBACK`, `COOKIE_URL`, `API_TIMEOUT`, `API_STREAM_TIMEOUT` |
 | Features | `AUTO_END`, `AUTO_LEAVE`, `THUMB_GEN`, `VIDEO_PLAY`, `VIDEO_MAX_HEIGHT` |
 | Branding | `SUPPORT_CHANNEL`, `SUPPORT_CHAT`, `START_IMG`, `PING_IMG`, `RADIO_IMG`, `DEFAULT_THUMB` |
 | Moderation | `EXCLUDED_CHATS`, `EXCLUDED_USERNAMES` |

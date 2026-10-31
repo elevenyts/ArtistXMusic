@@ -63,9 +63,6 @@ class Config:
         self.ENABLE_COOKIES_FALLBACK: bool = self._str_to_bool(getenv("ENABLE_COOKIES_FALLBACK", "True"))
         self.API_TIMEOUT: int = int(getenv("API_TIMEOUT", "60"))
         self.API_STREAM_TIMEOUT: int = int(getenv("API_STREAM_TIMEOUT", "300"))
-        # True  -> API /stream se milne wale URL se VC me turant play (full download ka wait nahi)
-        # False -> purana tarika (pehle poori file download, phir play)
-        self.STREAM_FIRST: bool = self._str_to_bool(getenv("STREAM_FIRST", "True"))
 
         # YouTube Cookies
         self.COOKIES_URL: List[str] = self._parse_cookies()

@@ -1,56 +1,93 @@
-from ArtistMusic import app
-from ArtistMusic.helpers import utils
-from pyrogram import Client, filters
+# ==========================================================
+# Copyright (c) 2026 ArtistBots
+# All Rights Reserved.
+#
+# Project      : ArtistBots API Telegram Music Bot
+# Powered By   : Artist
+#
+# Channel      : https://t.me/artistbots
+# GitHub       : https://github.com/elevenyts/ArtistMusic
+# ==========================================================
+import html
 
+from pyrogram import filters, types
 from pyrogram.enums import ParseMode
 
-####
+from ArtistMusic import app, logger
+from ArtistMusic.helpers import utils
 
-@app.on_message(filters.command('id'))
-async def getid(client, message):
+
+def _msg_link(msg: types.Message):
+    """message.link is None (or can raise) in private chats / basic groups."""
+    try:
+        return msg.link
+    except Exception:
+        return None
+
+
+def _line(label: str, value, url: str | None = None) -> str:
+    title = f'<a href="{url}">{label}</a>' if url else label
+    return f"<b>{title}</b> <code>{value}</code>\n"
+
+
+@app.on_message(filters.command("id") & ~app.bl_users)
+async def getid(client, message: types.Message):
     chat = message.chat
-    your_id = message.from_user.id
-    message_id = message.id
     reply = message.reply_to_message
 
-    text = f"**[ᴍᴇssᴀɢᴇ ɪᴅ:]({message.link})** `{message_id}`\n"
-    text += f"**[ʏᴏᴜʀ ɪᴅ:](tg://user?id={your_id})** `{your_id}`\n"
+    text = _line("ᴍᴇssᴀɢᴇ ɪᴅ:", message.id, _msg_link(message))
 
-    if not message.command:
-        message.command = message.text.split()
+    # from_user is None for anonymous admins / channel posts
+    if message.from_user:
+        uid = message.from_user.id
+        text += _line("ʏᴏᴜʀ ɪᴅ:", uid, f"tg://user?id={uid}")
+    elif message.sender_chat:
+        text += _line("sᴇɴᴅᴇʀ ᴄʜᴀᴛ ɪᴅ:", message.sender_chat.id)
 
-    if not message.command:
-        message.command = message.text.split()
-
-    if len(message.command) == 2:
+    # /id @username  or  /id 123456789
+    if len(message.command) > 1:
+        arg = message.command[1].strip()
+        if arg.lstrip("-").isdigit():
+            arg = int(arg)
         try:
-            split = message.text.split(None, 1)[1].strip()
-            user_id = (await client.get_users(split)).id
-            text += f"**[ᴜsᴇʀ ɪᴅ:](tg://user?id={user_id})** `{user_id}`\n"
-
+            user = await client.get_users(arg)
+            text += _line("ᴜsᴇʀ ɪᴅ:", user.id, f"tg://user?id={user.id}")
         except Exception:
-            return await utils.reply(message, text="ᴛʜɪs ᴜsᴇʀ ᴅᴏᴇsɴ'ᴛ ᴇxɪsᴛ.", quote=True)
+            try:
+                target = await client.get_chat(arg)
+                text += _line("ᴄʜᴀᴛ ɪᴅ:", target.id)
+            except Exception:
+                return await utils.reply(
+                    message,
+                    text="ᴛʜɪs ᴜsᴇʀ ᴏʀ ᴄʜᴀᴛ ᴅᴏᴇsɴ'ᴛ ᴇxɪsᴛ.",
+                    quote=True,
+                )
 
-    text += f"**[ᴄʜᴀᴛ ɪᴅ:](https://t.me/{chat.username})** `{chat.id}`\n\n"
+    # chat.username is None for private groups -> no link in that case
+    chat_url = f"https://t.me/{chat.username}" if getattr(chat, "username", None) else None
+    text += _line("ᴄʜᴀᴛ ɪᴅ:", chat.id, chat_url) + "\n"
 
-    if (
-        not getattr(reply, "empty", True)
-        and not message.forward_from_chat
-        and not reply.sender_chat
-    ):
-        text += f"**[ʀᴇᴘʟɪᴇᴅ ᴍᴇssᴀɢᴇ ɪᴅ:]({reply.link})** `{reply.id}`\n"
-        text += f"**[ʀᴇᴘʟɪᴇᴅ ᴜsᴇʀ ɪᴅ:](tg://user?id={reply.from_user.id})** `{reply.from_user.id}`\n\n"
+    if reply:
+        text += _line("ʀᴇᴘʟɪᴇᴅ ᴍᴇssᴀɢᴇ ɪᴅ:", reply.id, _msg_link(reply))
+        if reply.from_user:
+            rid = reply.from_user.id
+            text += _line("ʀᴇᴘʟɪᴇᴅ ᴜsᴇʀ ɪᴅ:", rid, f"tg://user?id={rid}")
+        elif reply.sender_chat:
+            text += _line("ʀᴇᴘʟɪᴇᴅ ᴄʜᴀᴛ/ᴄʜᴀɴɴᴇʟ ɪᴅ:", reply.sender_chat.id)
 
-    if reply and reply.forward_from_chat:
-        text += f"ᴛʜᴇ ғᴏʀᴡᴀʀᴅᴇᴅ ᴄʜᴀɴɴᴇʟ, {reply.forward_from_chat.title}, ʜᴀs ᴀɴ ɪᴅ ᴏғ `{reply.forward_from_chat.id}`\n\n"
-        print(reply.forward_from_chat)
+        # forwarded message: old (forward_from_chat) and new (forward_origin) Kurigram fields
+        origin = getattr(reply, "forward_origin", None)
+        fchat = getattr(reply, "forward_from_chat", None) or getattr(origin, "chat", None)
+        fuser = getattr(reply, "forward_from", None) or getattr(origin, "sender_user", None)
+        if fchat:
+            text += "\n" + _line(
+                f"ғᴏʀᴡᴀʀᴅᴇᴅ ᴄʜᴀɴɴᴇʟ ɪᴅ ({html.escape(getattr(fchat, 'title', '') or '')}):",
+                fchat.id,
+            )
+        if fuser:
+            text += _line("ғᴏʀᴡᴀʀᴅᴇᴅ ᴜsᴇʀ ɪᴅ:", fuser.id, f"tg://user?id={fuser.id}")
 
-    if reply and reply.sender_chat:
-        text += f"ɪᴅ ᴏғ ᴛʜᴇ ʀᴇᴘʟɪᴇᴅ ᴄʜᴀᴛ/ᴄʜᴀɴɴᴇʟ, ɪs `{reply.sender_chat.id}`"
-        print(reply.sender_chat)
-
-    await message.reply_text(
-        text,
-        disable_web_page_preview=True,
-        parse_mode=ParseMode.DEFAULT,
-    )
+    try:
+        await utils.reply(message, text=text, quote=True, parse_mode=ParseMode.HTML)
+    except Exception as e:
+        logger.warning(f"/id reply failed in {chat.id}: {e}")

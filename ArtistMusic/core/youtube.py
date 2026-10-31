@@ -54,8 +54,6 @@ class YouTube:
         self._inflight: dict[tuple[str, bool], asyncio.Future] = {}
         # logger-group uploads currently running (prevents duplicate uploads)
         self._uploading: set[tuple[str, bool]] = set()
-        # background "stream url -> local file" tasks (strong refs so they don't get GC'd)
-        self._bg_tasks: set = set()
 
         # Regular expression to match YouTube URLs
         self.regex = re.compile(
@@ -237,123 +235,23 @@ class YouTube:
         else:
             logger.error("❌ No cookies saved! Check COOKIE_URL in .env.")
 
-    # ───────────── API /stream (inline play URL) ─────────────
-    @staticmethod
-    def _local_path(video_id: str, video: bool = False) -> str:
-        return os.path.join("downloads", f"{video_id}{'.mp4' if video else '.mp3'}")
-
-    async def _api_stream_info(self, video_id: str, video: bool = False) -> Optional[dict]:
-        """
-        Build the API `/stream` URL.
-
-        `/stream` plays the audio/video inline (it never returns JSON), so the
-        request URL itself is the playable URL - no extra request is needed.
-        Returns {"download_url": <stream url>} or None if the API is not configured.
-        """
-        if not (self.enable_api and self.api_url and self.artistbots_key):
-            return None
-        query = urlencode({
-            "url": video_id,
-            "type": "video" if video else "audio",
-            "api_key": self.artistbots_key,
-        })
-        return {
-            "success": True,
-            "video_id": video_id,
-            "type": "video" if video else "audio",
-            "download_url": f"{self.api_url.rstrip('/')}/stream?{query}",
-        }
-
-    async def _download_url_to_file(self, url: str, file_path: str, video_id: str = "") -> Optional[str]:
-        """Save a media URL to `file_path` (temp file -> validate -> atomic move)."""
-        os.makedirs(os.path.dirname(file_path) or ".", exist_ok=True)
-        # unique temp name: two tasks for the same song never write the same .part file
-        tmp_path = f"{file_path}.{uuid.uuid4().hex[:8]}.part"
-        try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(
-                    url, timeout=aiohttp.ClientTimeout(total=self.api_stream_timeout)
-                ) as resp:
-                    if resp.status != 200:
-                        logger.warning(f"⚠️ [STREAM FILE] status {resp.status} for {video_id}")
-                        return None
-                    ctype = (resp.headers.get("content-type") or "").lower()
-                    if any(t in ctype for t in ("json", "html", "text/")):
-                        logger.warning(f"⚠️ [STREAM FILE] non-media content ({ctype}) for {video_id}")
-                        return None
-                    with open(tmp_path, "wb") as f:
-                        async for chunk in resp.content.iter_chunked(65536):
-                            f.write(chunk)
-
-            if not os.path.exists(tmp_path) or os.path.getsize(tmp_path) == 0:
-                return None
-            with open(tmp_path, "rb") as _f:
-                head = _f.read(512).lstrip()
-            if head[:1] in (b"{", b"[", b"<") or head[:5].lower() in (b"error", b"<!doc"):
-                logger.warning(f"⚠️ [STREAM FILE] non-media data for {video_id}: {head[:80]!r}")
-                return None
-            if os.path.exists(file_path) and not self.is_bad_media_file(file_path):
-                return file_path  # someone else already saved a good copy
-            os.replace(tmp_path, file_path)
-            size_mb = os.path.getsize(file_path) / (1024 * 1024)
-            logger.info(f"✅ [STREAM FILE] Saved {file_path} ({size_mb:.2f} MB)")
-            return file_path
-        except Exception as e:
-            logger.warning(f"⚠️ [STREAM FILE] save failed for {video_id}: {type(e).__name__}: {e}")
-            return None
-        finally:
-            if os.path.exists(tmp_path):
-                try:
-                    os.remove(tmp_path)
-                except OSError:
-                    pass
-
-    async def _save_stream_bg(self, track, url: str, video: bool) -> None:
-        """Background: stream URL -> local file (cache + replay/seek) -> logger-group cache."""
-        video_id = track.id
-        path = await self._download_url_to_file(url, self._local_path(video_id, video), video_id)
-        if not path:
-            return
-        # replay / loop / seek now use the local file instead of the (maybe expiring) URL
-        if getattr(track, "file_path", None) == url:
-            track.file_path = path
-        try:
-            await self.cache_to_logger(video_id, path, video=video)
-        except Exception as e:
-            logger.debug(f"cache_to_logger failed for {video_id}: {e}")
-
+    # ───────────── Play source (API /download -> full file -> play) ─────────────
     async def get_play_source(self, track) -> Optional[str]:
         """
-        Fastest way to start a song in the VC.
+        Returns the file path to play.
+
+        The song is always fully downloaded first (ArtistBots API `/download`,
+        then the cookies fallback) and only then handed to the voice chat:
 
         1. already cached (disk / logger group)   -> local file path
-        2. API /stream gives a playable URL        -> that URL, VC starts at once;
-                                                      the file is saved in the background
-        3. anything fails                          -> old behaviour (full download)
+        2. API /download (full download)          -> local file path
+        3. cookies fallback (yt-dlp)              -> local file path
         """
         video = getattr(track, "video", False)
         video_id = track.id
-
         if getattr(track, "is_live", False):
             return await self.download(video_id, is_live=True, video=video)
-        if not config.STREAM_FIRST or not self.is_yt_id(video_id):
-            return await self.download(video_id, video=video)
-
-        await self.purge_bad_download(video_id, video=video)
-        cached = await self.try_logger_cache(video_id, video=video)
-        if cached:
-            return cached
-
-        info = await self._api_stream_info(video_id, video)
-        if not info:
-            return await self.download(video_id, video=video)
-
-        url = info["download_url"]
-        logger.info(f"⚡ [STREAM FIRST] Playing {video_id} from stream URL, saving file in background")
-        task = asyncio.ensure_future(self._save_stream_bg(track, url, video))
-        self._bg_tasks.add(task)
-        task.add_done_callback(self._bg_tasks.discard)
-        return url
+        return await self.download(video_id, video=video)
 
     async def download_via_api(self, link: str, video: bool = False) -> Optional[str]:
         """
@@ -404,14 +302,6 @@ class YouTube:
             else:
                 logger.debug(f"File already exists: {file_path}")
                 return file_path
-
-        # NEW: API /stream (JSON with download_url) -> save file. Old /download kept as fallback below.
-        if self.artistbots_key:
-            info = await self._api_stream_info(video_id, video)
-            if info:
-                saved = await self._download_url_to_file(info["download_url"], file_path, video_id)
-                if saved:
-                    return saved
 
         try:
             download_type = "video" if video else "audio"

@@ -261,7 +261,7 @@ class TgCall(PyTgCalls):
             # - sync ext: External sync (reduces A/V desync)
             ffmpeg_params = "-probesize 10M -analyzeduration 5M -rtbufsize 5M -fflags +genpts+igndts -sync ext"
 
-        # URL source (API /stream): auto-reconnect if the connection drops mid-song
+        # URL source: auto-reconnect if the connection drops mid-song
         _src = str(media.file_path)
         if _src.startswith(("http://", "https://")) and not getattr(media, "is_live", False):
             ffmpeg_params += " -reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5"
