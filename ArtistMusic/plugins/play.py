@@ -21,25 +21,44 @@ from ArtistMusic import tune, app, config, db, lang, queue, tg, yt
 from ArtistMusic.helpers import buttons, utils
 from ArtistMusic.helpers._play import checkUB
 import asyncio
+import html
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-# ── Music search animation frames ─────────────────────────────────────────
-_PLAY_FRAMES = [
-    "🔍 Searching and downloading...",
-]
+# ── Music search -> download animation ────────────────────────────────────
+# Frame 1 (instantly)  : 🔍🎶 sєᴧʀᴄʜɪηɢ ғσʀ: <query> ... ⚡✨
+# Frame 2 (after ~1 s) : 📥 ᴅσᴡηʟσᴧᴅɪηɢ sσηɢ "<song title> ..."
+_FRAME_MIN_SECONDS = 1.0  # how long the "searching" frame stays visible at least
 
 
-async def _play_animation(sent_msg):
-    """Animate the searching message. Silently stops when message is edited externally."""
-    for frame in _PLAY_FRAMES:
-        await asyncio.sleep(1.5)
-        try:
-            await sent_msg.edit_text(frame, parse_mode="html")
-        except Exception:
-            return  # Message edited externally or error — stop cleanly
+def _short(text: str, limit: int = 40) -> str:
+    """Trim + HTML-escape text so it is safe inside a Telegram HTML message."""
+    text = " ".join(str(text).split())
+    if len(text) > limit:
+        text = text[:limit].rstrip()
+    return html.escape(text)
+
+
+def _searching_text(query: str) -> str:
+    return f"🔍🎶 sєᴧʀᴄʜɪηɢ ғσʀ: {_short(query)} ... ⚡✨"
+
+
+def _downloading_text(title: str) -> str:
+    return f'📥 ᴅσᴡηʟσᴧᴅɪηɢ sσηɢ "{_short(title)} ..."'
+
+
+async def _show_downloading(sent, started_at: float, title: str) -> None:
+    """
+    Switch the "searching" frame to the "downloading" frame.
+    Makes sure the first frame was visible for at least ~1 second so it
+    looks like a smooth animation, even when the search was instant (cache).
+    """
+    wait = _FRAME_MIN_SECONDS - (asyncio.get_running_loop().time() - started_at)
+    if wait > 0:
+        await asyncio.sleep(wait)
+    await safe_edit(sent, _downloading_text(title))
 
 
 async def safe_edit(message, text, **kwargs):
@@ -227,13 +246,21 @@ async def play_hndlr(
                     f"Error: {error_str}</blockquote>"
                 )
 
-    # Send animated searching message
+    # Send animated searching message (frame 1)
+    if url:
+        _label = url
+    elif len(m.command) >= 2:
+        _label = " ".join(m.command[1:])
+    else:
+        _label = "your song"
+    _searching_msg = _searching_text(_label)
+
     try:
-        sent = await safe_reply(m, _PLAY_FRAMES[0])
+        sent = await safe_reply(m, _searching_msg)
     except FloodWait as e:
         await asyncio.sleep(e.value)
         try:
-            sent = await safe_reply(m, _PLAY_FRAMES[0])
+            sent = await safe_reply(m, _searching_msg)
         except FloodWait as e2:
             await asyncio.sleep(e2.value)
             return
@@ -242,8 +269,10 @@ async def play_hndlr(
     except Exception:
         return
 
-    # Static text now (no animation needed - re-editing with the same text would just error)
-    
+    if not sent:
+        return
+    _anim_start = asyncio.get_running_loop().time()
+
     mention = m.from_user.mention
     media = tg.get_media(m.reply_to_message) if m.reply_to_message else None
     tracks = []
@@ -361,6 +390,9 @@ async def play_hndlr(
             return
 
     if not file.file_path:
+        # Frame 2: search finished, now downloading / streaming the song
+        await _show_downloading(sent, _anim_start, file.title)
+
         if file.is_live:
             # Live streams: extract direct stream URL
             file.file_path = await yt.download(
