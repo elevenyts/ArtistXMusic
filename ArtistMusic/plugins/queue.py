@@ -62,7 +62,7 @@ async def _queue_func(_, m: types.Message):
 
     _playing = await db.playing(chat_id)
     await _reply.edit_media(
-        media=utils.input_media(_thumb, _text),
+        media=utils.input_media(_thumb, _text, spoiler=True),
         reply_markup=buttons.queue_markup(
             chat_id,
             "Playing" if _playing else "Paused",

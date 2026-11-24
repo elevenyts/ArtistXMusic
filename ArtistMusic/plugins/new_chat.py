@@ -13,22 +13,114 @@
 # Unauthorized copying, modification, or redistribution
 # of this source code without permission is prohibited.
 # ==========================================================
-from pyrogram import filters, types
+import asyncio
+import html
+import time
+
+from pyrogram import enums, filters, types
 from pyrogram.errors import ChatAdminRequired, ChannelPrivate
 
 from ArtistMusic import app, config
 from ArtistMusic.helpers import utils
 
 
+async def _send_group_welcome(chat, added_by) -> None:
+    """Welcome message (image + Add Me / Help buttons) sent in the group itself."""
+    chat_title = html.escape(chat.title or "this group")
+    thanks = (
+        f"Thank you {added_by.mention} for adding me to {chat_title} ♡"
+        if added_by
+        else f"Thank you for adding me to {chat_title} ♡"
+    )
+    caption = (
+        "<b>♡ Thank You For Adding Me ♡\n\n"
+        f"🎵 {html.escape(app.name or 'Music Bot')}\n\n"
+        "🥀 Ready To Play Your Favourite Music.\n\n"
+        f"{thanks}</b>"
+    )
+    markup = types.InlineKeyboardMarkup([[
+        types.InlineKeyboardButton(
+            text="ᴀᴅᴅ ᴍᴇ",
+            url=f"https://t.me/{app.username}?startgroup=true",
+        ),
+        types.InlineKeyboardButton(text="ʜᴇʟᴘ", callback_data="help"),
+    ]])
+    try:
+        await utils.send_media(
+            chat_id=chat.id,
+            media=config.START_IMG,
+            caption=caption,
+            reply_markup=markup,
+        )
+    except Exception:
+        # Image failed (or no photo permission) -> plain text welcome
+        try:
+            await app.send_message(chat_id=chat.id, text=caption, reply_markup=markup)
+        except Exception as e:
+            print(f"Failed to send group welcome message: {e}")
+
+
+_welcomed: dict = {}  # chat_id -> time of last welcome (stops double-sending)
+_bg_tasks: set = set()
+
+
+def _claim_welcome(chat_id: int) -> bool:
+    """True only for the first trigger (join update or service message) per join."""
+    now = time.time()
+    for cid, ts in list(_welcomed.items()):
+        if now - ts > 30:
+            _welcomed.pop(cid, None)
+    if chat_id in _welcomed:
+        return False
+    _welcomed[chat_id] = now
+    return True
+
+
+def _fire_welcome(chat, added_by) -> None:
+    """Send the welcome in the background so nothing else can delay it."""
+    task = asyncio.create_task(_send_group_welcome(chat, added_by))
+    _bg_tasks.add(task)
+    task.add_done_callback(_bg_tasks.discard)
+
+
+# ==========================================
+# ⚡ INSTANT WELCOME (fires the moment the bot is added)
+# ==========================================
+@app.on_chat_member_updated(filters.group, group=-10)
+async def _bot_added_instant(_, update: types.ChatMemberUpdated):
+    new = update.new_chat_member
+    old = update.old_chat_member
+    if not new or not new.user or new.user.id != app.id:
+        return
+    if new.status not in (
+        enums.ChatMemberStatus.MEMBER,
+        enums.ChatMemberStatus.ADMINISTRATOR,
+    ):
+        return
+    if old and old.status in (
+        enums.ChatMemberStatus.MEMBER,
+        enums.ChatMemberStatus.ADMINISTRATOR,
+        enums.ChatMemberStatus.OWNER,
+    ):
+        return  # was already in the group (e.g. just promoted)
+    if not _claim_welcome(update.chat.id):
+        return
+    _fire_welcome(update.chat, update.from_user)
+
+
 # ==========================================
 # 🟢 BOT ADDED IN GROUP
 # ==========================================
-@app.on_message(filters.new_chat_members & filters.group)
+@app.on_message(filters.new_chat_members & filters.group, group=-10)
 async def new_chat_member(_, message: types.Message):
 
     for member in message.new_chat_members:
         if member.id == app.id:
             chat = message.chat
+
+            # Welcome message in the group right away (skipped if the join update already sent it)
+            if _claim_welcome(chat.id):
+                _fire_welcome(chat, message.from_user)
 
             chat_name = chat.title
             chat_id = chat.id

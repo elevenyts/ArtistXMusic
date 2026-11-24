@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  助手已被封禁\n\n助手 {0} 已在此群组中被封禁。\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>正在播放</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  技术支持来自  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} 播放日志\n\n🏠  群组：<code>{1}</code>  ┊  {2}\n👤  用户：<code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  标题：{6}\n⏱  时长：{7} 分钟</blockquote>",
-  "play_queued": "<blockquote>🎵  已添加到队列\n\n🟢  位置  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  时长  ╌  {3} 分钟\n👤  点播者  ╌  {4}</blockquote>",
+  "play_queued": "<u>已添加到队列:</u> {0}\n标题: <a href={1}>{2}</a>\n时长: {3} 分钟\n点播者: {4}",
   "play_usage": "<blockquote>📋  <b>用法：</b>\n\n<code>/play [歌曲名称 / YouTube 链接 / 回复音频]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  视频播放功能已<b>禁用</b>。</blockquote>",
   "play_seeking": "⟳  正在调整进度...",

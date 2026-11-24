@@ -73,6 +73,7 @@ class TgCall(PyTgCalls):
                 media=photo,
                 caption=caption,
                 reply_markup=reply_markup,
+                spoiler=True,
             )
         except errors.FloodWait as fw:
             await asyncio.sleep(fw.value + 1)
@@ -82,6 +83,7 @@ class TgCall(PyTgCalls):
                     media=photo,
                     caption=caption,
                     reply_markup=reply_markup,
+                    spoiler=True,
                 )
             except Exception as e:
                 logger.error(f"Now Playing photo send failed after FloodWait for {chat_id}: {e}")
@@ -754,7 +756,7 @@ class TgCall(PyTgCalls):
 
             try:
                 msg = await app.send_message(
-                    chat_id=target_chat, text="🔎 Finding a similar song..."
+                    chat_id=target_chat, text="🔎 Finding the next song from the playlist..."
                 )
             except Exception:
                 msg = None

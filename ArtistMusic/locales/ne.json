@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  सहायक प्रतिबन्धित\n\n{0} सहायक तपाईंको च्याटबाट प्रतिबन्धित छ।\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>अहिले बजिरहेको छ</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  द्वारा सञ्चालित  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} प्ले लग\n\n🏠  च्याट: <code>{1}</code>  ┊  {2}\n👤  प्रयोगकर्ता: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  शीर्षक: {6}\n⏱  अवधि: {7} मिनेट</blockquote>",
-  "play_queued": "<blockquote>🎵  क्युमा थपियो\n\n🟢  स्थान  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  अवधि  ╌  {3} मिनेट\n👤  द्वारा  ╌  {4}</blockquote>",
+  "play_queued": "<u>क्युमा थपियो:</u> {0}\nशीर्षक: <a href={1}>{2}</a>\nअवधि: {3} मिनेट\nद्वारा: {4}",
   "play_usage": "<blockquote>📋  <b>प्रयोग गर्ने तरिका:</b>\n\n<code>/play [गीतको नाम / युट्युब लिङ्क / अडियोलाई रिप्लाई]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  भिडियो प्लेब्याक <b>निष्क्रिय छ</b>।</blockquote>",
   "play_seeking": "⟳  स्ट्रिम खोजिँदैछ...",

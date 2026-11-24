@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  دستیار مسدود شده است\n\nدستیار {0} در چت شما مسدود شده است.\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>هم‌اکنون در حال پخش</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  قدرت گرفته از  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  گزارش پخش {0}\n\n🏠  چت: <code>{1}</code>  ┊  {2}\n👤  کاربر: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  عنوان: {6}\n⏱  مدت زمان: {7} دقیقه</blockquote>",
-  "play_queued": "<blockquote>🎵  به صف پخش اضافه شد\n\n🟢  موقعیت  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  مدت زمان  ╌  {3} دقیقه\n👤  توسط  ╌  {4}</blockquote>",
+  "play_queued": "<u>به صف پخش اضافه شد:</u> {0}\nعنوان: <a href={1}>{2}</a>\nمدت زمان: {3} دقیقه\nتوسط: {4}",
   "play_usage": "<blockquote>📋  <b>نحوه استفاده:</b>\n\n<code>/play [نام آهنگ / لینک یوتیوب / ریپلای روی فایل صوتی]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  پخش ویدیو <b>غیرفعال است</b>.</blockquote>",
   "play_seeking": "⟳  در حال پرش زمانی در استریم...",

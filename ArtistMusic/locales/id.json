@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  ASISTEN DIBLOKIR\n\nAsisten {0} diblokir dari obrolan Anda.\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>SEDANG DIPUTAR</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  Ditenagai oleh  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} Log Pemutaran\n\n🏠  Obrolan: <code>{1}</code>  ┊  {2}\n👤  Pengguna: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  Judul: {6}\n⏱  Durasi: {7} mnt</blockquote>",
-  "play_queued": "<blockquote>🎵  DITAMBAHKAN KE ANTREAN\n\n🟢  Posisi  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  Durasi  ╌  {3} mnt\n👤  Oleh  ╌  {4}</blockquote>",
+  "play_queued": "<u>DITAMBAHKAN KE ANTREAN:</u> {0}\nJudul: <a href={1}>{2}</a>\nDurasi: {3} mnt\nOleh: {4}",
   "play_usage": "<blockquote>📋  <b>PENGGUNAAN:</b>\n\n<code>/play [nama lagu / url youtube / balas audio]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  Pemutaran video <b>dinonaktifkan</b>.</blockquote>",
   "play_seeking": "⟳  Mencari posisi streaming...",

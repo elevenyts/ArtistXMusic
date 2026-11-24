@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  АССИСТЕНТ ЗАБЛОКИРОВАН\n\nАссистент {0} заблокирован в вашем чате.\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>СЕЙЧАС ИГРАЕТ</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  Работает на  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} Лог воспроизведения\n\n🏠  Чат: <code>{1}</code>  ┊  {2}\n👤  Пользователь: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  Название: {6}\n⏱  Длительность: {7} мин</blockquote>",
-  "play_queued": "<blockquote>🎵  ДОБАВЛЕНО В ОЧЕРЕДЬ\n\n🟢  Позиция  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  Длительность  ╌  {3} мин\n👤  От  ╌  {4}</blockquote>",
+  "play_queued": "<u>ДОБАВЛЕНО В ОЧЕРЕДЬ:</u> {0}\nНазвание: <a href={1}>{2}</a>\nДлительность: {3} мин\nОт: {4}",
   "play_usage": "<blockquote>📋  <b>ИСПОЛЬЗОВАНИЕ:</b>\n\n<code>/play [название песни / url youtube / ответ на аудио]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  Воспроизведение видео <b>отключено</b>.</blockquote>",
   "play_seeking": "⟳  Перемотка трансляции...",

@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  అసిస్టెంట్ బ్యాన్ చేయబడింది\n\n{0} అసిస్టెంట్ మీ చాట్ నుండి బ్యాన్ చేయబడింది.\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>ఇప్పుడు ప్లే అవుతోంది</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  పవర్డ్ బై  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} ప్లే లాగ్\n\n🏠  చాట్: <code>{1}</code>  ┊  {2}\n👤  వినియోగదారు: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  శీర్షిక: {6}\n⏱  నిడివి: {7} నిమిషాలు</blockquote>",
-  "play_queued": "<blockquote>🎵  క్యూకి జోడించబడింది\n\n🟢  స్థానం  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  నిడివి  ╌  {3} నిమిషాలు\n👤  కోరినవారు  ╌  {4}</blockquote>",
+  "play_queued": "<u>క్యూకి జోడించబడింది:</u> {0}\nశీర్షిక: <a href={1}>{2}</a>\nనిడివి: {3} నిమిషాలు\nకోరినవారు: {4}",
   "play_usage": "<blockquote>📋  <b>వాడుక:</b>\n\n<code>/play [పాట పేరు / యూట్యూబ్ లింక్ / ఆడియోకి రిప్లై]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  వీడియో ప్లేబ్యాక్ <b>నిలిపివేయబడింది</b>.</blockquote>",
   "play_seeking": "⟳  స్ట్రీమ్‌ను వెతుకుతోంది...",

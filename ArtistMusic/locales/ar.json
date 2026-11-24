@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  المساعد محظور\n\nالمساعد {0} محظور من مجموعتك.\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>يتم التشغيل الآن</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  بواسطة  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  سجل تشغيل {0}\n\n🏠  الدردشة: <code>{1}</code>  ┊  {2}\n👤  المستخدم: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  العنوان: {6}\n⏱  المدة: {7} دقيقة</blockquote>",
-  "play_queued": "<blockquote>🎵  تمت الإضافة إلى قائمة الانتظار\n\n🟢  الترتيب  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  المدة  ╌  {3} دقيقة\n👤  بواسطة  ╌  {4}</blockquote>",
+  "play_queued": "<u>تمت الإضافة إلى قائمة الانتظار:</u> {0}\nالعنوان: <a href={1}>{2}</a>\nالمدة: {3} دقيقة\nبواسطة: {4}",
   "play_usage": "<blockquote>📋  <b>الاستخدام:</b>\n\n<code>/play [اسم الأغنية / رابط يوتيوب / الرد على مقطع صوتي]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  تشغيل الفيديو <b>معطل</b>.</blockquote>",
   "play_seeking": "⟳  جاري البحث في البث...",

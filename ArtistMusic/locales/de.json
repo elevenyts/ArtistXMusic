@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  ASSISTENT GESPERRT\n\nDer Assistent {0} ist in deinem Chat gesperrt.\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>JETZT WIRD ABGESPIELT</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  Unterstützt von  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} Wiedergabeprotokoll\n\n🏠  Chat: <code>{1}</code>  ┊  {2}\n👤  Benutzer: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  Titel: {6}\n⏱  Dauer: {7} Min.</blockquote>",
-  "play_queued": "<blockquote>🎵  ZUR WARTESCHLANGE HINZUGEFÜGT\n\n🟢  Position  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  Dauer  ╌  {3} Min.\n👤  Von  ╌  {4}</blockquote>",
+  "play_queued": "<u>ZUR WARTESCHLANGE HINZUGEFÜGT:</u> {0}\nTitel: <a href={1}>{2}</a>\nDauer: {3} Min.\nVon: {4}",
   "play_usage": "<blockquote>📋  <b>VERWENDUNG:</b>\n\n<code>/play [Songname / YouTube-URL / Auf Audio antworten]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  Video-Wiedergabe ist <b>deaktiviert</b>.</blockquote>",
   "play_seeking": "⟳  Durchsuche Stream...",

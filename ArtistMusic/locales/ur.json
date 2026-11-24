@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  اسسٹنٹ ممنوعہ\n\n{0} اسسٹنٹ آپ کی چیٹ سے ممنوع (بین) ہے۔\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>اب چل رہا ہے</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  پیش کردہ  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} پلے لاگ\n\n🏠  چیٹ: <code>{1}</code>  ┊  {2}\n👤  صارف: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  عنوان: {6}\n⏱  دورانیہ: {7} منٹ</blockquote>",
-  "play_queued": "<blockquote>🎵  قطار میں شامل کر دیا گیا\n\n🟢  مقام  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  دورانیہ  ╌  {3} منٹ\n👤  بذریعہ  ╌  {4}</blockquote>",
+  "play_queued": "<u>قطار میں شامل کر دیا گیا:</u> {0}\nعنوان: <a href={1}>{2}</a>\nدورانیہ: {3} منٹ\nبذریعہ: {4}",
   "play_usage": "<blockquote>📋  <b>استعمال:</b>\n\n<code>/play [گانے کا نام / یوٹیوب یو آر ایل / آڈیو کا جواب دیں]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  ویڈیو پلے بیک <b>غیر فعال</b> ہے۔</blockquote>",
   "play_seeking": "⟳  اسٹریم تلاش کی جا رہی ہے...",

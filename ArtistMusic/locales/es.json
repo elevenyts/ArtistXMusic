@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  ASISTENTE BANEADO\n\nEl asistente {0} está baneado de tu chat.\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>REPRODUCIENDO AHORA</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  Desarrollado por  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} Registro de reproducción\n\n🏠  Chat: <code>{1}</code>  ┊  {2}\n👤  Usuario: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  Título: {6}\n⏱  Duración: {7} min</blockquote>",
-  "play_queued": "<blockquote>🎵  AÑADIDO A LA COLA\n\n🟢  Posición  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  Duración  ╌  {3} min\n👤  Por  ╌  {4}</blockquote>",
+  "play_queued": "<u>AÑADIDO A LA COLA:</u> {0}\nTítulo: <a href={1}>{2}</a>\nDuración: {3} min\nPor: {4}",
   "play_usage": "<blockquote>📋  <b>USO:</b>\n\n<code>/play [nombre de canción / url de youtube / responder a audio]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  La reproducción de video está <b>desactivada</b>.</blockquote>",
   "play_seeking": "⟳  Buscando transmisión...",

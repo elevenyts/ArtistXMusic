@@ -194,8 +194,7 @@
 | `ARTISTBOTS_KEY` | ⚙️ | API key — log in at [artistbotsapi.bond](https://artistbotsapi.bond) to get your key |
 | `SUPPORT_CHAT` | 🔵 | Support group link (optional) |
 | `SUPPORT_CHANNEL` | 🔵 | Updates channel link (optional) |
-| `START_IMG` | 🔵 | Start message image URL (optional) |
-| `PING_IMG` | 🔵 | Ping message image URL (optional) |
+| `MEDIA_URLS` | 🔵 | Comma/space separated image/gif/mp4 links; one is picked at random (no repeat until all shown) for START, PING, ADD, RADIO and DEFAULT_THUMB (optional) |
 | `STRING_SESSION2` | 🔵 | Second assistant session (optional) |
 | `STRING_SESSION3` | 🔵 | Third assistant session (optional) |
 

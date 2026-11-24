@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  어시스턴트 차단됨\n\n{0} 어시스턴트가 채팅에서 차단되었습니다.\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>현재 재생 중</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  Powered by  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} 재생 로그\n\n🏠  채팅: <code>{1}</code>  ┊  {2}\n👤  사용자: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  제목: {6}\n⏱  재생 시간: {7} 분</blockquote>",
-  "play_queued": "<blockquote>🎵  대기열에 추가됨\n\n🟢  위치  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  재생 시간  ╌  {3} 분\n👤  신청자  ╌  {4}</blockquote>",
+  "play_queued": "<u>대기열에 추가됨:</u> {0}\n제목: <a href={1}>{2}</a>\n재생 시간: {3} 분\n신청자: {4}",
   "play_usage": "<blockquote>📋  <b>사용법:</b>\n\n<code>/play [노래 제목 / YouTube URL / 오디오 답글]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  비디오 재생이 <b>비활성화</b>되어 있습니다.</blockquote>",
   "play_seeking": "⟳  스트림 탐색 중...",

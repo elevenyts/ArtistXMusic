@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  ASİSTAN ENGELLENDİ\n\n{0} asistanı sohbetinizden engellenmiş.\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>ŞU ANDA ÇALIYOR</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  Altyapı: <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} Çalma Günlüğü\n\n🏠  Sohbet: <code>{1}</code>  ┊  {2}\n👤  Kullanıcı: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  Başlık: {6}\n⏱  Süre: {7} dk</blockquote>",
-  "play_queued": "<blockquote>🎵  SIRAYA EKLENDİ\n\n🟢  Pozisyon  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  Süre  ╌  {3} dk\n👤  Ekleyen  ╌  {4}</blockquote>",
+  "play_queued": "<u>SIRAYA EKLENDİ:</u> {0}\nBaşlık: <a href={1}>{2}</a>\nSüre: {3} dk\nEkleyen: {4}",
   "play_usage": "<blockquote>📋  <b>KULLANIM:</b>\n\n<code>/play [şarkı adı / youtube bağlantısı / sese yanıt]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  Video oynatma <b>devre dışı</b>.</blockquote>",
   "play_seeking": "⟳  Akış sarılıyor...",

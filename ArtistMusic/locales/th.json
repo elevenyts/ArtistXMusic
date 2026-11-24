@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  ผู้ช่วยถูกแบน\n\nผู้ช่วย {0} ถูกแบนออกจากแชทของคุณ\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>กำลังเล่น</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  สนับสนุนโดย  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} บันทึกการเล่น\n\n🏠  แชท: <code>{1}</code>  ┊  {2}\n👤  ผู้ใช้: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  ชื่อเพลง: {6}\n⏱  ความยาว: {7} นาที</blockquote>",
-  "play_queued": "<blockquote>🎵  เพิ่มลงในคิวแล้ว\n\n🟢  ลำดับที่  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  ความยาว  ╌  {3} นาที\n👤  โดย  ╌  {4}</blockquote>",
+  "play_queued": "<u>เพิ่มลงในคิวแล้ว:</u> {0}\nชื่อเพลง: <a href={1}>{2}</a>\nความยาว: {3} นาที\nโดย: {4}",
   "play_usage": "<blockquote>📋  <b>วิธีใช้งาน:</b>\n\n<code>/play [ชื่อเพลง / ลิงก์ YouTube / ตอบกลับไฟล์เสียง]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  การเล่นวิดีโอถูก <b>ปิดใช้งาน</b></blockquote>",
   "play_seeking": "⟳  กำลังกรอสตรีม...",

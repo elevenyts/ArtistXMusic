@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  アシスタントBAN済み\n\n{0} アシスタントはチャットからBANされています。\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>再生中</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  Powered by  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} 再生ログ\n\n🏠  チャット: <code>{1}</code>  ┊  {2}\n👤  ユーザー: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  タイトル: {6}\n⏱  再生時間: {7} 分</blockquote>",
-  "play_queued": "<blockquote>🎵  キューに追加されました\n\n🟢  位置  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  再生時間  ╌  {3} 分\n👤  リクエスト者  ╌  {4}</blockquote>",
+  "play_queued": "<u>キューに追加されました:</u> {0}\nタイトル: <a href={1}>{2}</a>\n再生時間: {3} 分\nリクエスト者: {4}",
   "play_usage": "<blockquote>📋  <b>使用方法:</b>\n\n<code>/play [曲名 / YouTube URL / 音声に返信]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  動画再生は<b>無効</b>になっています。</blockquote>",
   "play_seeking": "⟳  シーク中...",

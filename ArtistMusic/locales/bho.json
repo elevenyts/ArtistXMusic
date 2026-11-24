@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  असिस्टेंट बैन बा\n\n{0} असिस्टेंट रउआ चैट से बैन बा।\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>अब बज रहल बा</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  पावर्ड बाई  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} प्ले लॉग\n\n🏠  चैट: <code>{1}</code>  ┊  {2}\n👤  यूजर: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  नाम: {6}\n⏱  टाइम: {7} मिनट</blockquote>",
-  "play_queued": "<blockquote>🎵  कतार में जोड़ दिहल गइल\n\n🟢  नंबर  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  टाइम  ╌  {3} मिनट\n👤  भोजवइया  ╌  {4}</blockquote>",
+  "play_queued": "<u>कतार में जोड़ दिहल गइल:</u> {0}\nशीर्षक: <a href={1}>{2}</a>\nटाइम: {3} मिनट\nभोजवइया: {4}",
   "play_usage": "<blockquote>📋  <b>इस्तेमाल:</b>\n\n<code>/play [गाना के नाम / यूट्यूब लिंक / ऑडियो के रिप्लाई]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  वीडियो बजावल <b>बंद बा</b>।</blockquote>",
   "play_seeking": "⟳  स्ट्रीम आगे-पीछे हो रहल बा...",

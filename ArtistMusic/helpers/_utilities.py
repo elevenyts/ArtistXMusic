@@ -112,31 +112,21 @@ class Utilities:
         )
 
     # ---- media type detection (photo / gif / mp4 etc.) ----
-    _ANIMATION_EXT = (".gif", ".mp4")
-    _VIDEO_EXT = (".webm", ".mov", ".mkv", ".avi", ".m4v")
-
     def media_kind(self, media) -> str:
-        """Return "animation", "video" or "photo" based on the link's extension."""
-        if not isinstance(media, str):
-            return "photo"
-        try:
-            path = urlparse(media).path.lower()
-        except Exception:
-            path = media.lower()
-        if path.endswith(self._ANIMATION_EXT):
-            return "animation"
-        if path.endswith(self._VIDEO_EXT):
-            return "video"
-        return "photo"
+        """Return "animation", "video", "svg" or "photo" based on the link's extension."""
+        from config import media_kind
+        return media_kind(media)
 
-    def input_media(self, media, caption: str | None = None):
+    def input_media(self, media, caption: str | None = None, spoiler: bool = False):
         """InputMedia* object matching the link type (for edit_media)."""
         kind = self.media_kind(media)
         if kind == "animation":
-            return types.InputMediaAnimation(media=media, caption=caption)
+            return types.InputMediaAnimation(media=media, caption=caption, has_spoiler=spoiler)
         if kind == "video":
-            return types.InputMediaVideo(media=media, caption=caption)
-        return types.InputMediaPhoto(media=media, caption=caption)
+            return types.InputMediaVideo(media=media, caption=caption, has_spoiler=spoiler)
+        if kind == "svg":
+            return types.InputMediaDocument(media=media, caption=caption)
+        return types.InputMediaPhoto(media=media, caption=caption, has_spoiler=spoiler)
 
     async def send_media(
         self,
@@ -145,9 +135,12 @@ class Utilities:
         caption: str | None = None,
         reply_markup=None,
         reply_parameters=None,
+        spoiler: bool = False,
         **kwargs,
     ) -> types.Message:
         """Send jpg/png/webp as photo, gif/mp4 as animation, other videos as video."""
+        if spoiler:
+            kwargs["has_spoiler"] = True
         kind = self.media_kind(media)
         if kind == "animation":
             return await app.send_animation(
@@ -157,6 +150,14 @@ class Utilities:
                 reply_markup=reply_markup,
                 reply_parameters=reply_parameters,
                 **kwargs,
+            )
+        if kind == "svg":
+            return await app.send_document(
+                chat_id=chat_id,
+                document=media,
+                caption=caption,
+                reply_markup=reply_markup,
+                reply_parameters=reply_parameters,
             )
         if kind == "video":
             return await app.send_video(

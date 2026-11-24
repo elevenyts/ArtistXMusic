@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  TRỢ LÝ BỊ CẤM\n\nTrợ lý {0} đã bị cấm khỏi cuộc trò chuyện của bạn.\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>ĐANG PHÁT</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  Được vận hành bởi  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} Nhật ký phát\n\n🏠  Trò chuyện: <code>{1}</code>  ┊  {2}\n👤  Người dùng: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  Tiêu đề: {6}\n⏱  Thời lượng: {7} phút</blockquote>",
-  "play_queued": "<blockquote>🎵  ĐÃ THÊM VÀO HÀNG CHỜ\n\n🟢  Vị trí  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  Thời lượng  ╌  {3} phút\n👤  Bởi  ╌  {4}</blockquote>",
+  "play_queued": "<u>ĐÃ THÊM VÀO HÀNG CHỜ:</u> {0}\nTiêu đề: <a href={1}>{2}</a>\nThời lượng: {3} phút\nBởi: {4}",
   "play_usage": "<blockquote>📋  <b>CÁCH DÙNG:</b>\n\n<code>/play [tên bài hát / url youtube / trả lời tệp âm thanh]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  Tính năng phát video đã <b>bị tắt</b>.</blockquote>",
   "play_seeking": "⟳  Đang tua luồng phát...",

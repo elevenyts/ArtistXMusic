@@ -15,6 +15,7 @@
 # ==========================================================
 from pyrogram import filters
 from pyrogram import types
+from pyrogram.enums import ButtonStyle
 from pyrogram.errors import FloodWait, MessageIdInvalid, MessageDeleteForbidden, ChatSendPlainForbidden, ChatWriteForbidden
 
 from ArtistMusic import tune, app, config, db, lang, queue, tg, yt
@@ -111,6 +112,17 @@ async def safe_reply(message, text, **kwargs):
     except Exception as e:
         logger.error(f"Failed to send reply: {e}")
         return None
+
+
+def queue_play_now(chat_id: int, item_id: str) -> types.InlineKeyboardMarkup:
+    """Single full-width "Play Now" button for the "Added to queue" message."""
+    return types.InlineKeyboardMarkup([[
+        types.InlineKeyboardButton(
+            text="▷ ᴘʟᴀʏ ɴᴏᴡ",
+            callback_data=f"controls force {chat_id} {item_id}",
+            style=ButtonStyle.PRIMARY,
+        )
+    ]])
 
 
 def queue_controls(chat_id: int) -> types.InlineKeyboardMarkup:
@@ -365,8 +377,8 @@ async def play_hndlr(
                     file.duration,
                     m.from_user.mention,
                 ),
-                # Now-Playing style buttons: pause, play, skip, stop + close (no replay, no autoplay)
-                reply_markup=queue_controls(chat_id),
+                # Single "Play Now" button -> plays this queued track immediately
+                reply_markup=queue_play_now(chat_id, file.id),
             )
             if tracks:
                 added = playlist_to_queue(chat_id, tracks)

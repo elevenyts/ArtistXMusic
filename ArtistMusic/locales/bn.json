@@ -73,7 +73,7 @@
   "play_banned": "<blockquote>🚫  অ্যাসিস্ট্যান্ট নিষিদ্ধ\n\n{0} অ্যাসিস্ট্যান্ট আপনার চ্যাটে নিষিদ্ধ (Banned)।\n\n🆔  <code>{1}</code>\n📛  {2}\n🔗  {3}</blockquote>",
   "play_media": "➲ <b>এখন বাজছে</b>   \n\n🎧  <a href={0}><b>{1}</b></a>\n🕔  {2}  |  👤  {3}\n\n<i>❤️  পরিচালিত  <a href=\"https://t.me/ArtistBots\">˹ ᴀʀᴛɪsᴛ ˼</a></i>",
   "play_log": "<blockquote>🎵  {0} প্লে লগ\n\n🏠  চ্যাট: <code>{1}</code>  ┊  {2}\n👤  ব্যবহারকারী: <code>{3}</code>  ┊  {4}\n🔗  {5}\n\n🎶  শিরোনাম: {6}\n⏱  সময়কাল: {7} মিনিট</blockquote>",
-  "play_queued": "<blockquote>🎵  কিউতে যোগ করা হয়েছে\n\n🟢  অবস্থান  ╌  #{0}\n🎵  <a href={1}>{2}</a>\n⏰  সময়কাল  ╌  {3} মিনিট\n👤  অনুরোধকারী  ╌  {4}</blockquote>",
+  "play_queued": "<u>কিউতে যোগ করা হয়েছে:</u> {0}\nশিরোনাম: <a href={1}>{2}</a>\nসময়কাল: {3} মিনিট\nঅনুরোধকারী: {4}",
   "play_usage": "<blockquote>📋  <b>ব্যবহার পদ্ধতি:</b>\n\n<code>/play [গানের নাম / ইউটিউব লিঙ্ক / অডিওর উত্তর দিন]</code></blockquote>",
   "play_video_disabled": "<blockquote>❌  ভিডিও প্লেব্যাক <b>নিষ্ক্রিয়</b> রয়েছে।</blockquote>",
   "play_seeking": "⟳  স্ট্রিম খোঁজা হচ্ছে...",
