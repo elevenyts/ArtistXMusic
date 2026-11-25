@@ -86,7 +86,7 @@
   "play_resumed": "<blockquote>◀️  sᴛʀєᴧϻ  ʀєsυϻєᴅ\n\n◈  ʀєsυϻєᴅ ʙʏ  ╌  {0}</blockquote>",
   "play_replayed": "<blockquote>🔺  ᴛʀᴧᴄᴋ  ʀєᴘʟᴧʏєᴅ\n\n◈  ʀєᴘʟᴧʏєᴅ ʙʏ  ╌  {0}</blockquote>",
   "play_skipped": "<blockquote>⏭  ᴛʀᴧᴄᴋ  sᴋɪᴘᴘєᴅ\n\n💠  sᴋɪᴘᴘєᴅ ʙʏ  ╌  {0}</blockquote>",
-  "play_stopped": "<blockquote>🔸  sᴛʀєᴧϻ  sᴛσᴘᴘєᴅ\n\n◈  sᴛσᴘᴘєᴅ ʙʏ  ╌  {0}</blockquote>",
+  "play_stopped": "❖ sᴛʀєᴧᴍ єηᴅєᴅ/sᴛσᴘᴘєᴅ 🎄\n│\n│\n│\n└ʙʏ ‣ {0} 🥀",
   "play_seeked": "<blockquote>⏩  sєєᴋєᴅ  ᴛσ  {0}\n\n⏰  ᴛɪϻє  ╌  {1}\n👤  ʙʏ  ╌  {2}</blockquote>",
   "play_expired": "<blockquote>⏳  ᴛʜɪs ʙυᴛᴛση ʜᴧs <b>єxᴘɪʀєᴅ</b>.</blockquote>",
   "play_live": "<blockquote>🔴  ʟɪᴠє  sᴛʀєᴧϻ  ᴅєᴛєᴄᴛєᴅ\n\n💠  sᴛᴧʀᴛɪηɢ ʟɪᴠє sᴛʀєᴧϻ ᴘʟᴧʏʙᴧᴄᴋ...</blockquote>",

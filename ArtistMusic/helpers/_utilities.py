@@ -177,6 +177,16 @@ class Utilities:
             **kwargs,
         )
 
+    def close_markup(self, chat_id: int) -> types.InlineKeyboardMarkup:
+        """Single red close button (handled by the "controls close" callback)."""
+        return types.InlineKeyboardMarkup([[
+            types.InlineKeyboardButton(
+                text="• ᴄʟσsє •",
+                callback_data=f"controls close {chat_id}",
+                style=enums.ButtonStyle.DANGER,
+            )
+        ]])
+
     async def reply(
         self,
         message: types.Message,

@@ -12,6 +12,7 @@
 # What it does:
 #   While the assistant is in a group's voice chat, the bot announces in
 #   the group every time someone JOINS, LEAVES or is REMOVED from the VC.
+#   Each notification is auto-deleted after a few seconds.
 #
 # Command (group admins & sudoers):
 #   /vclog [on|off]   - turn the notifications on / off (default: ON)
@@ -36,12 +37,14 @@ SEND_GAP = 1.2          # seconds between two notifications in one chat
 MAX_PENDING = 15        # drop extra notifications when a chat is flooded
 DEDUPE_SECS = 3         # ignore the same event for the same user within N sec
 MAX_RETRIES = 5         # FloodWait retries for one message
+DELETE_AFTER = 4        # auto-delete each notification after N sec
 
 _enabled: dict[int, bool] = {}          # chat_id -> on/off (cache of the DB value)
 _locks: dict[int, asyncio.Lock] = {}    # one sender per chat -> keeps order, avoids flood
 _pending: dict[int, int] = {}           # chat_id -> queued notifications
 _recent: dict[tuple, float] = {}        # (chat, user, action) -> last time
 _names: dict[int, str] = {}             # user_id -> first name cache
+_delete_tasks: set[asyncio.Task] = set()  # keeps pending delete tasks alive
 
 
 # ─────────────────────────── settings ───────────────────────────
@@ -112,11 +115,29 @@ async def _user_name(user_id: int) -> str:
     return name
 
 
+async def _delete_later(message: Message) -> None:
+    """Delete a notification after DELETE_AFTER seconds."""
+    await asyncio.sleep(DELETE_AFTER)
+    for _ in range(MAX_RETRIES):
+        try:
+            await message.delete()
+            return
+        except FloodWait as e:
+            await asyncio.sleep(int(e.value) + 1)
+        except Exception as e:
+            logger.debug(f"vclog delete failed in {message.chat.id}: {e}")
+            return
+
+
 async def _send(chat_id: int, text: str) -> None:
     """Send one notification; on FloodWait wait it out and retry the SAME message."""
     for _ in range(MAX_RETRIES):
         try:
-            await app.send_message(chat_id, text)
+            sent = await app.send_message(chat_id, text)
+            # run in the background so the next notification is not delayed
+            task = asyncio.create_task(_delete_later(sent))
+            _delete_tasks.add(task)
+            task.add_done_callback(_delete_tasks.discard)
             return
         except FloodWait as e:
             await asyncio.sleep(int(e.value) + 1)

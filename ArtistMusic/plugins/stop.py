@@ -20,7 +20,7 @@ from pyrogram import filters, types
 from pyrogram.errors import ChatSendPlainForbidden, ChatWriteForbidden
 
 from ArtistMusic import tune, app, db, lang
-from ArtistMusic.helpers import can_manage_vc
+from ArtistMusic.helpers import can_manage_vc, utils
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +59,10 @@ async def _stop(_, m: types.Message):
 
     await tune.stop(chat_id)
     try:
-        sent_msg = await m.reply_text(f"Stopped by {m.from_user.mention}")
+        sent_msg = await m.reply_text(
+            m.lang["play_stopped"].format(m.from_user.mention),
+            reply_markup=utils.close_markup(m.chat.id),
+        )
     except (ChatSendPlainForbidden, ChatWriteForbidden):
         logger.warning("Cannot send text in this chat, stream stopped silently.")
         return

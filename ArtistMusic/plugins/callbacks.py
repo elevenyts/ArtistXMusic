@@ -241,13 +241,14 @@ async def _controls(_, query: types.CallbackQuery):
     try:
         if action in ["skip", "replay", "stop"]:
             sent_msg = None
+            markup = utils.close_markup(query.message.chat.id) if action == "stop" else None
             try:
-                sent_msg = await utils.reply(query.message, text=reply, quote=False)
+                sent_msg = await utils.reply(query.message, text=reply, quote=False, reply_markup=markup)
             except FloodWait as e:
                 # If FloodWait occurs, wait and retry once
                 await asyncio.sleep(e.value)
                 try:
-                    sent_msg = await utils.reply(query.message, text=reply, quote=False)
+                    sent_msg = await utils.reply(query.message, text=reply, quote=False, reply_markup=markup)
                 except Exception:
                     pass
             except Exception:
